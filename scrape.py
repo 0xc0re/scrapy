@@ -10,6 +10,15 @@ def format_text(soup):
         tag.append('\n')
     return soup.get_text()
 
+def format_text(soup):
+    # Add line breaks between different elements for minimal formatting
+    for tag in soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'br']):
+        tag.append('\n')
+    text_content = soup.get_text()
+    # Remove any non-readable or special characters
+    text_content = re.sub(r'[^\w\s.,?!;:\-\'"]', '', text_content)
+    return text_content
+
 def download_page_as_text(driver, url, filename):
     try:
         driver.get(url)
